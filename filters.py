@@ -17,6 +17,7 @@ iterator.
 You'll edit this file in Tasks 3a and 3c.
 """
 import operator
+from datetime import datetime
 
 
 class UnsupportedCriterionError(NotImplementedError):
@@ -71,6 +72,30 @@ class AttributeFilter:
     def __repr__(self):
         return f"{self.__class__.__name__}(op=operator.{self.op.__name__}, value={self.value})"
 
+class DateFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach):
+        return approach.time.date()
+
+class HazardousFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach):
+        return approach.neo.hazardous
+
+class DiameterFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach):
+        return approach.neo.diameter
+
+class VelocityFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach):
+        return approach.velocity
+
+class DistanceFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach):
+        return approach.distance
 
 def create_filters(
         date=None, start_date=None, end_date=None,
@@ -109,8 +134,30 @@ def create_filters(
     :return: A collection of filters for use with `query`.
     """
     # TODO: Decide how you will represent your filters.
-    return ()
-
+    filters = []
+    if date:
+        filters.append(DateFilter(operator.eq, date))
+    elif start_date:
+        filters.append(DateFilter(operator.ge, start_date))
+    elif end_date:
+        filters.append(DateFilter(operator.le, end_date))
+    elif distance_min:
+        filters.append(DistanceFilter(operator.ge, distance_min))
+    elif distance_max:
+        filters.append(DistanceFilter(operator.le, distance_max))
+    elif velocity_max:
+        filters.append(VelocityFilter(operator.le, velocity_max))
+    elif velocity_min:
+        filters.append(VelocityFilter(operator.ge, velocity_min))
+    elif diameter_max:
+        filters.append(DiameterFilter(operator.le, diameter_max))
+    elif diameter_min:
+        filters.append(DiameterFilter(operator.ge, diameter_min))
+    elif hazardous == '--hazardous':
+        filters.append(HazardousFilter(operator.eq, True))
+    elif hazardous == '--not-hazardous':
+        filters.append(HazardousFilter(operator.eq, False))
+    return filters
 
 def limit(iterator, n=None):
     """Produce a limited stream of values from an iterator.

@@ -41,7 +41,7 @@ def load_approaches(cad_json_path):
     """
     # TODO: Load close approach data from the given JSON file.
     approaches = []
-    with open(cad_json_path, 'r') as f:
+    with open(cad_json_path) as f:
         data = json.load(f)
         for cad in data['data']:
             approaches.append(CloseApproach(_designation=cad[0], time=cad[3], distance=cad[4], velocity=cad[7]))

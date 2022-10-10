@@ -56,7 +56,7 @@ class NearEarthObject:
     def fullname(self):
         """Return a representation of the full name of this NEO."""
         # TODO: Use self.designation and self.name to build a fullname for this object.
-        if self.name:
+        if self.name != None:
             return self.designation + ' ' + self.name
         else:
             return self.designation
