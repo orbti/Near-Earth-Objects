@@ -169,4 +169,9 @@ def limit(iterator, n=None):
     :yield: The first (at most) `n` values from the iterator.
     """
     # TODO: Produce at most `n` values from the given iterator.
-    return iterator
+    if n == 0 or n is None:
+        return iterator
+    for i, x in enumerate(iterator):
+        if i > (n - 1):
+            break
+        yield x
