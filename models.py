@@ -18,7 +18,7 @@ quirks of the data set, such as missing names and unknown diameters.
 You'll edit this file in Task 1.
 """
 from helpers import cd_to_datetime, datetime_to_str
-
+from datetime import datetime
 
 class NearEarthObject:
     """A near-Earth object (NEO).
@@ -34,7 +34,7 @@ class NearEarthObject:
     """
     # TODO: How can you, and should you, change the arguments to this constructor?
     # If you make changes, be sure to update the comments in this file.
-    def __init__(self, designation='', name=None, diameter=float('nan'), hazardous=False):
+    def __init__(self, **info):
         """Create a new `NearEarthObject`.
 
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
@@ -44,10 +44,10 @@ class NearEarthObject:
         # You should coerce these values to their appropriate data type and
         # handle any edge cases, such as a empty name being represented by `None`
         # and a missing diameter being represented by `float('nan')`.
-        self.designation = str(designation)
-        self.name = None if name == '' else str(name)
-        self.diameter = float('nan') if diameter == '' else float(diameter)
-        self.hazardous = True if hazardous in [True, 'Y'] else False
+        self.designation = info.get('designation')
+        self.name = info.get('name')
+        self.diameter = info.get('diameter')
+        self.hazardous = info.get('hazardous')
 
         # Create an empty initial collection of linked approaches.
         self.approaches = []
@@ -58,8 +58,7 @@ class NearEarthObject:
         # TODO: Use self.designation and self.name to build a fullname for this object.
         if self.name != None:
             return self.designation + ' ' + self.name
-        else:
-            return self.designation
+        return self.designation
 
     def __str__(self):
         """Return `str(self)`."""
@@ -89,7 +88,7 @@ class CloseApproach:
     """
     # TODO: How can you, and should you, change the arguments to this constructor?
     # If you make changes, be sure to update the comments in this file.
-    def __init__(self, _designation=None, time=None, distance=0.0, velocity=0.0):
+    def __init__(self, **info):
         """Create a new `CloseApproach`.
 
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
@@ -98,10 +97,13 @@ class CloseApproach:
         # onto attributes named `_designation`, `time`, `distance`, and `velocity`.
         # You should coerce these values to their appropriate data type and handle any edge cases.
         # The `cd_to_datetime` function will be useful.
-        self._designation = _designation
-        self.time = cd_to_datetime(time)  # TODO: Use the cd_to_datetime function for this attribute.
-        self.distance = float('nan') if distance == '' else float(distance)
-        self.velocity = float('nan') if velocity == '' else float(velocity)
+        self._designation = info.get('designation')
+        self.time = info.get('time')
+        if self.time:
+            self.time = cd_to_datetime(self.time)
+            assert isinstance(self.time, datetime.datetime), # TODO: Use the cd_to_datetime function for this attribute.
+        self.distance = info.get('distance', float('nan'))
+        self.velocity = info.get('velocity', float('nan'))
 
         # Create an attribute for the referenced NEO, originally None.
         self.neo = None
@@ -115,7 +117,7 @@ class CloseApproach:
         includes seconds - significant figures that don't exist in our input
         data set.
 
-        The `datetime_to_str` method converts a `datetime` object to a
+        The `datetime_to_str` method converts a `datetime` object to as
         formatted string that can be used in human-readable representations and
         in serialization to CSV and JSON files.
         """
