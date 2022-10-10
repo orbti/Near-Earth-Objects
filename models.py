@@ -51,6 +51,10 @@ class NearEarthObject:
 
         # Create an empty initial collection of linked approaches.
         self.approaches = []
+        
+    @property
+    def designation(self):
+        return self._designation
 
     @property
     def fullname(self):

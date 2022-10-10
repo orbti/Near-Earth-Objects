@@ -60,7 +60,7 @@ def load_approaches(cad_json_path):
         for line in reader:
             try:
                 approach = CloseApproach(
-                    _designation=line['des'],
+                    designation=line['des'],
                     time=line['cd'], 
                     distance=float(line['dist']),
                     velocity=float(line['v_rel'])
