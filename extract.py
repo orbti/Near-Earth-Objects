@@ -25,11 +25,24 @@ def load_neos(neo_csv_path):
     :return: A collection of `NearEarthObject`s.
     """
     # TODO: Load NEO data from the given CSV file.
-    neos = []
-    with open(neo_csv_path) as f:
+    with open(neo_csv_path, 'r') as f:
         reader = csv.DictReader(f)
-        for neo in reader:
-            neos.append(NearEarthObject(designation=neo['pdes'], name=neo['name'], diameter=neo['diameter'], hazardous=neo['pha']))
+        neos = []
+        for line in reader:
+            line['name'] = line['name'] or None
+            line['diameter'] = float(line['diameter']) if line['diameter'] else None
+            line['pha'] = False if line['pha'] in ['', 'N'] else True
+            try:
+                neo = neos.append(NearEarthObject(
+                    designation=line['pdes'], 
+                    name=line['name'], 
+                    diameter=line['diameter'], 
+                    hazardous=line['pha'])
+                )
+            except Exception as e:
+                print(e)
+            else:
+                neos.append(neo)
     return neos
 
 
@@ -40,9 +53,20 @@ def load_approaches(cad_json_path):
     :return: A collection of `CloseApproach`es.
     """
     # TODO: Load close approach data from the given JSON file.
-    approaches = []
     with open(cad_json_path) as f:
-        data = json.load(f)
-        for cad in data['data']:
-            approaches.append(CloseApproach(_designation=cad[0], time=cad[3], distance=cad[4], velocity=cad[7]))
+        reader = json.load(f)
+        reader = [dict(zip(reader['fields'], data)) for data in reader['data']]
+        approaches = []
+        for line in reader:
+            try:
+                approach = CloseApproach(
+                    _designation=line['des'],
+                    time=line['cd'], 
+                    distance=float(line['dist']),
+                    velocity=float(line['v_rel'])
+                )
+            except Exception as e:
+                print(e)
+            else:
+                approaches.append(approach)
     return approaches
