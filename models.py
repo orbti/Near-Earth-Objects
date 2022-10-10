@@ -51,6 +51,10 @@ class NearEarthObject:
 
         # Create an empty initial collection of linked approaches.
         self.approaches = []
+        
+    @property
+    def designation(self):
+        return self._designation
 
     @property
     def fullname(self):
@@ -97,11 +101,11 @@ class CloseApproach:
         # onto attributes named `_designation`, `time`, `distance`, and `velocity`.
         # You should coerce these values to their appropriate data type and handle any edge cases.
         # The `cd_to_datetime` function will be useful.
-        self._designation = info.get('designation')
+        self.designation = info.get('_designation')
         self.time = info.get('time')
         if self.time:
             self.time = cd_to_datetime(self.time)
-            assert isinstance(self.time, datetime.datetime), # TODO: Use the cd_to_datetime function for this attribute.
+            assert isinstance(self.time, datetime) # TODO: Use the cd_to_datetime function for this attribute.
         self.distance = info.get('distance', float('nan'))
         self.velocity = info.get('velocity', float('nan'))
 
