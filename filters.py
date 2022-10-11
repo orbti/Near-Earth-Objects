@@ -1,7 +1,7 @@
 import operator
 from datetime import datetime
 from re import X
-
+from helpers import cd_to_datetime
 
 class UnsupportedCriterionError(NotImplementedError):
     """A filter criterion is unsupported."""
@@ -61,11 +61,11 @@ def create_filters(
         if value is None:
             continue
         if key == 'date':
-            filters.append(DateFilter(operator.eq, value))
+            filters.append(DateFilter(operator.eq,value))
         elif key == 'start_date':
-            filters.append(DateFilter(operator.ge, value))
+            filters.append(DateFilter(operator.ge,value))
         elif key == 'end_date':
-            filters.append(DateFilter(operator.le, value))
+            filters.append(DateFilter(operator.le,value))
         elif key == 'distance_min':
             filters.append(DistanceFilter(operator.ge, value))
         elif key == 'distance_max':
@@ -95,5 +95,7 @@ def limit(iterator, n=None):
                 break
             count += 1
             yield x
+    
+        
                 
             
