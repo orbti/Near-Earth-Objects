@@ -136,7 +136,6 @@ def create_filters(
     """
     # TODO: Decide how you will represent your filters.
     args = locals()
-    print(type(args['hazardous']))
     filters = []
     for key, value in args.items():
         if value is None:
@@ -163,7 +162,6 @@ def create_filters(
             filters.append(HazardousFilter(operator.eq, True))
         elif value == False:
             filters.append(HazardousFilter(operator.eq, False))
-    print(filters)
     return filters
 
 def limit(iterator, n=None):
@@ -176,14 +174,15 @@ def limit(iterator, n=None):
     :yield: The first (at most) `n` values from the iterator.
     """
     # TODO: Produce at most `n` values from the given iterator.
+    count = 1
     if n == 0 or n == None:
         for x in iterator:
             yield x
     else:
-        count = 0
         for x in iterator:
-            if n > count:
+            if count > n:
                 break
-            count =+ 1
+            count += 1
             yield x
+                
             

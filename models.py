@@ -61,6 +61,13 @@ class NearEarthObject:
         else:
             return self.designation
 
+    def serialize(self):
+        """Return a dictionary containing  relevant attribues for CSV or JSON serialization"""
+        return {'designation': self.designation,
+                'name': self.name if self.name else '',
+                'diameter_km': self.diameter,
+                'potentially_hazardous': self.hazardous}
+
     def __str__(self):
         """Return `str(self)`."""
         # TODO: Use this object's attributes to return a human-readable string representation.
@@ -72,6 +79,7 @@ class NearEarthObject:
         """Return `repr(self)`, a computer-readable string representation of this object."""
         return f"NearEarthObject(designation={self.designation!r}, name={self.name!r}, " \
                f"diameter={self.diameter:.3f}, hazardous={self.hazardous!r})"
+    
 
 
 class CloseApproach:
@@ -124,6 +132,13 @@ class CloseApproach:
         # build a formatted representation of the approach time.
         # TODO: Use self.designation and self.name to build a fullname for this object.
         return datetime_to_str(self.time)
+
+    def serialize(self):
+        """Return a dictionary containing  relevant attribues for CSV or JSON serialization"""
+        return {'neo': self.neo,
+                'datetime_utc': datetime_to_str(self.time),
+                'distance_au': self.distance,
+                'velocity_km_s': self.velocity}
 
     def __str__(self):
         """Return `str(self)`."""
