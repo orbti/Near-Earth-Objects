@@ -180,7 +180,10 @@ def limit(iterator, n=None):
         for x in iterator:
             yield x
     else:
-        for i, x in enumerate(iterator):
-            if i > n - 1:
+        count = 0
+        for x in iterator:
+            if n > count:
                 break
+            count =+ 1
             yield x
+            
