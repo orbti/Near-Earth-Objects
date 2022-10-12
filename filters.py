@@ -77,10 +77,10 @@ def create_filters(
             filters.append(DiameterFilter(operator.le, value))
         elif key == 'diameter_min':
             filters.append(DiameterFilter(operator.ge, value))
-        elif value == True:
-            filters.append(HazardousFilter(operator.eq, True))
-        elif value == False:
-            filters.append(HazardousFilter(operator.eq, False))
+        elif (key == 'hazardous') & (value == True):
+            filters.append(HazardousFilter(operator.eq, value))
+        elif (key == 'hazardous') & (value == False):
+            filters.append(HazardousFilter(operator.eq, value))
     return filters
 
 def limit(iterator, n=None):
