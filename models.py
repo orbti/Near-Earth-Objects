@@ -37,7 +37,7 @@ class NearEarthObject:
 class CloseApproach:
     def __init__(self, **info):
         self._designation = info.get('_designation')
-        self.time = cd_to_datetime(info.get('time')) 
+        self.time = info.get('time') 
         self.distance = info.get('distance')
         self.velocity = info.get('velocity')
 
@@ -46,7 +46,7 @@ class CloseApproach:
     @property
     def time_str(self):
         return datetime_to_str(self.time)
-
+    
     def serialize(self):
         """Return a dictionary containing  relevant attribues for CSV or JSON serialization"""
         return {'neo': self.neo,

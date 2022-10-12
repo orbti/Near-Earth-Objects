@@ -2,9 +2,13 @@ import csv
 import json
 
 from models import NearEarthObject, CloseApproach
+from helpers import cd_to_datetime
 
 
 def load_neos(neo_csv_path):
+    """ Load NEO data from CSV file. Before returning data 'name',
+    'diameter', and 'pha' columns will be transformed to right
+    data type. """
     with open(neo_csv_path) as f:
         reader = csv.DictReader(f)
         neos = []
@@ -23,6 +27,9 @@ def load_neos(neo_csv_path):
 
 
 def load_approaches(cad_json_path):
+    """ Load CAD data from JSON file. Before returning data 'dist',
+    'v_rel', and 'pha' columns will be transformed to right
+    data type. """
     with open(cad_json_path) as f:
         reader = json.load(f)
         reader = [dict(zip(reader['fields'], data)) for data in reader['data']]
@@ -30,6 +37,7 @@ def load_approaches(cad_json_path):
         for line in reader:
             line['dist'] = float(line['dist']) if line['dist'] else float('nan')
             line['v_rel'] =  float(line['v_rel']) if line['v_rel'] else float('nan')
+            line['cd'] = cd_to_datetime(line['cd'])
             approach = CloseApproach(
                 _designation=line['des'], 
                 time=line['cd'], 
