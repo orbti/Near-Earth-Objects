@@ -57,7 +57,7 @@ def create_filters(
     args = locals()
     filters = []
     for key, value in args.items():
-        if value is None:
+        if value == None:
             continue
         if key == 'date':
             filters.append(DateFilter(operator.eq,value))
