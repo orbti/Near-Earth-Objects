@@ -7,6 +7,7 @@ class UnsupportedCriterionError(NotImplementedError):
 
 
 class AttributeFilter:
+
     def __init__(self, op, value):
         self.op = op
         self.value = value
@@ -20,32 +21,44 @@ class AttributeFilter:
         raise UnsupportedCriterionError
 
     def __repr__(self):
-        return f"{self.__class__.__name__}(op=operator.{self.op.__name__}, value={self.value})"
+        return f"{self.__class__.__name__}(op=operator.{self.op.__name__}, "\
+            f"value={self.value})"
+
 
 class DateFilter(AttributeFilter):
+
     @classmethod
     def get(cls, approach):
         return approach.time.date()
 
+
 class HazardousFilter(AttributeFilter):
+
     @classmethod
     def get(cls, approach):
         return approach.neo.hazardous
 
+
 class DiameterFilter(AttributeFilter):
+
     @classmethod
     def get(cls, approach):
         return approach.neo.diameter
 
+
 class VelocityFilter(AttributeFilter):
+
     @classmethod
     def get(cls, approach):
         return approach.velocity
 
+
 class DistanceFilter(AttributeFilter):
+
     @classmethod
     def get(cls, approach):
         return approach.distance
+
 
 def create_filters(
         date=None, start_date=None, end_date=None,
@@ -57,14 +70,14 @@ def create_filters(
     args = locals()
     filters = []
     for key, value in args.items():
-        if value == None:
+        if value is None:
             continue
         if key == 'date':
-            filters.append(DateFilter(operator.eq,value))
+            filters.append(DateFilter(operator.eq, value))
         elif key == 'start_date':
-            filters.append(DateFilter(operator.ge,value))
+            filters.append(DateFilter(operator.ge, value))
         elif key == 'end_date':
-            filters.append(DateFilter(operator.le,value))
+            filters.append(DateFilter(operator.le, value))
         elif key == 'distance_min':
             filters.append(DistanceFilter(operator.ge, value))
         elif key == 'distance_max':
@@ -77,15 +90,16 @@ def create_filters(
             filters.append(DiameterFilter(operator.le, value))
         elif key == 'diameter_min':
             filters.append(DiameterFilter(operator.ge, value))
-        elif (key == 'hazardous') & (value == True):
+        elif (key == 'hazardous') & (value is True):
             filters.append(HazardousFilter(operator.eq, value))
-        elif (key == 'hazardous') & (value == False):
+        elif (key == 'hazardous') & (value is False):
             filters.append(HazardousFilter(operator.eq, value))
     return filters
 
+
 def limit(iterator, n=None):
     count = 1
-    if n == 0 or n == None:
+    if n == 0 or n is None:
         for x in iterator:
             yield x
     else:
@@ -94,7 +108,3 @@ def limit(iterator, n=None):
                 break
             count += 1
             yield x
-    
-        
-                
-            
