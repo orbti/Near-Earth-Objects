@@ -1,10 +1,9 @@
-"""
-NEODatabase class useed to build the database. Database will be able to search on 
-designation or name to get NEO or user will submit filters to show all close 
-approaches within the filters.
-"""
+
 
 class NEODatabase:
+    """ NEODatabase class useed to build the database. Database will be able to search on 
+    designation or name to get NEO or user will submit filters to show all close 
+    approaches within the filters. """
     def __init__(self, neos, approaches):
         self._neos = neos
         self._approaches = approaches
