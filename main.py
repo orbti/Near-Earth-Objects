@@ -221,8 +221,8 @@ def query(database, args):
     results = database.query(filters)
 
     if not args.outfile:
-        # Write the results to stdout, limiting to 10 entries if not specified.
-        for result in limit(results, args.limit or 10):
+        # Write the results to stdout.
+        for result in limit(results, args.limit):
             print(result)
     else:
         # Write the results to a file.

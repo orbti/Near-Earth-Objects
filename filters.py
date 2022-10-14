@@ -186,9 +186,7 @@ def create_filters(
             filters.append(DiameterFilter(operator.le, value))
         elif key == 'diameter_min':
             filters.append(DiameterFilter(operator.ge, value))
-        elif (key == 'hazardous') & (value is True):
-            filters.append(HazardousFilter(operator.eq, value))
-        elif (key == 'hazardous') & (value is False):
+        elif (key == 'hazardous'):
             filters.append(HazardousFilter(operator.eq, value))
     return filters
 
