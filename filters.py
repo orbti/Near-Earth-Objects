@@ -15,6 +15,7 @@ the supplied `CloseApproach`.
 The `limit` function simply limits the maximum number of values produced by an
 iterator.
 """
+import itertools
 import operator
 from re import X
 
@@ -202,13 +203,6 @@ def limit(iterator, n=None):
     :param n: The maximum number of values to produce.
     :yield: The first (at most) `n` values from the iterator.
     """
-    count = 1
-    if n == 0 or n is None:
-        for x in iterator:
-            yield x
-    else:
-        for x in iterator:
-            if count > n:
-                break
-            count += 1
-            yield x
+    if n:
+        return itertools.islice(iterator, n)
+    return iterator
