@@ -1,3 +1,5 @@
+"""Module housing `load_neos` and `load_approaches`."""
+
 import csv
 import json
 
@@ -6,9 +8,13 @@ from helpers import cd_to_datetime
 
 
 def load_neos(neo_csv_path):
-    """ Load NEO data from CSV file. Before returning data 'name',
+    """
+    Load `NEO` csv file.
+
+    Load NEO data from CSV file. Before returning data 'name',
     'diameter', and 'pha' columns will be transformed to right
-    data type. """
+    data type.
+    """
     with open(neo_csv_path) as f:
         reader = csv.DictReader(f)
         neos = []
@@ -29,9 +35,13 @@ def load_neos(neo_csv_path):
 
 
 def load_approaches(cad_json_path):
-    """ Load CAD data from JSON file. Before returning data 'dist',
+    """
+    Load `CAD` json file.
+
+    Load CAD data from JSON file. Before returning data 'dist',
     'v_rel', and 'pha' columns will be transformed to right
-    data type. """
+    data type.
+    """
     with open(cad_json_path) as f:
         reader = json.load(f)
         reader = [dict(zip(reader['fields'], data)) for data in reader['data']]

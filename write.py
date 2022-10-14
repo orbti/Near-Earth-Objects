@@ -1,10 +1,11 @@
+"""Module housing `write_to_csv` and `write_to_json`."""
+
 import csv
 import json
 
 
 def write_to_csv(results, filename):
-    """ Write query to a csv file after serializtion."""
-
+    """Write query to a csv file after serializtion."""
     fieldnames = (
         'datetime_utc', 'distance_au', 'velocity_km_s',
         'designation', 'name', 'diameter_km', 'potentially_hazardous'
@@ -21,8 +22,7 @@ def write_to_csv(results, filename):
 
 
 def write_to_json(results, filename):
-    """ Write query to a json file after serializtion."""
-
+    """Write query to a json file after serializtion."""
     approaches = []
     for elem in results:
         approache = elem.serialize()
