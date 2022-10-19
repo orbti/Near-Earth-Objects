@@ -72,14 +72,14 @@ class NearEarthObject:
 
     def __str__(self):
         """Return `str(self)`."""
-        return f"NEO {self.fullname} has a diamter {self.diameter:.3f} km and"\
-            f"{ 'is' if self.hazardous else 'is not'} potentially hazardous."
+        return f"""NEO {self.fullname} has a diamter {self.diameter:.3f} km and
+            {'is' if self.hazardous else 'is not'} potentially hazardous."""
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
-        return f"NearEarthObject(designation={self.designation!r}, " \
-            f"name={self.name!r}, "\
-            f"diameter={self.diameter:.3f}, hazardous={self.hazardous!r})"
+        return f"""NearEarthObject(designation={self.designation!r}, 
+            name={self.name!r}, diameter={self.diameter:.3f}, hazardous={self.hazardous!r})
+            """
 
 
 class CloseApproach:
@@ -128,12 +128,11 @@ class CloseApproach:
 
     def __str__(self):
         """Return `str(self)`."""
-        return f"On {self.time_str}, {self.neo.fullname} approaches " \
-            f"Earth at a distance of {self.distance:.2f} au " \
-            f"and a velocity of {self.velocity:.2f} km/s."
+        return f"""On {self.time_str}, {self.neo.fullname} approaches 
+            Earth at a distance of {self.distance:.2f} au 
+            and a velocity of {self.velocity:.2f} km/s."""
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
-        return f"CloseApproach(time={self.time_str!r}, "\
-            f"distance={self.distance:.2f}, " \
-            f"velocity={self.velocity:.2f}, neo={self.neo!r})"
+        return f"""CloseApproach(time={self.time_str!r}, 
+            distance={self.distance:.2f}, velocity={self.velocity:.2f}, neo={self.neo!r})"""
